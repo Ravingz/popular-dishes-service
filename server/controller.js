@@ -25,6 +25,7 @@ const getPhotos = (request, response) => {
 }
 
 const getCompany = (companyNumber, response) => {
+    // console.log('req', req.param)
     var query = 'SELECT * FROM Restaurants WHERE restaurant_id = ' + companyNumber;
     db.query(query, (err,data) => {
         if (err) {

@@ -1,5 +1,5 @@
 const aws = require('aws-sdk');
-const config = require('../config.json');
+const config = require('../config.js');
 const db = require('./index.js');
 const faker = require('faker');
 
@@ -16,8 +16,8 @@ var maxReviews = 100;
 var maxPhotos = 20;
 
 // region and bucket for aws
-var photoBucket = 'photosthree';
-var westRegion = 'us-west-1';
+var photoBucket = 'ravingzbucket';
+var eastRegion = 'us-east-2';
 
 // function for making one company
 const makeCompany = () => {
@@ -90,33 +90,33 @@ const makeUser = (imageUrl) => {
 }
 
 const formatUrlWithKey = (object, region) => {
-    return 'https://photosthree.s3-' + region + '.amazonaws.com/' + object.Key;
+    return 'https://ravingzbucket.s3-' + region + '.amazonaws.com/' + object.Key;
 };
 
 (async function () {
     try {
         aws.config.setPromisesDependency();
         aws.config.update({
-            accessKeyId: config.aws.accessKey,
-            secretAccessKey: config.aws.secretKey,
-            region: westRegion
+            accessKeyId: config.accessKey,
+            secretAccessKey: config.secretKey,
+            region: eastRegion
         });
 
         const s3 = new aws.S3();
 
         const response = await s3.listObjectsV2({
             Bucket: photoBucket,
-            Prefix: 'Random Foods' // folder names can be changed here
+            // Prefix: 'Random Foods' // folder names can be changed here
         }).promise();
     
             const response2 = await s3.listObjectsV2({
                 Bucket: photoBucket,
-                Prefix: 'Random Foods 2' //folder names can be changed here
+                // Prefix: 'Random Foods 2' //folder names can be changed here
             }).promise();
     
             const response3 = await s3.listObjectsV2({
                 Bucket: photoBucket,
-                Prefix: 'main-sprites' // had three folders, but you should ideally have two folders
+                // Prefix: 'main-sprites' // had three folders, but you should ideally have two folders
             }).promise();
     
             var arrayOfObjects = response.Contents.concat(response2.Contents)
@@ -140,13 +140,13 @@ const formatUrlWithKey = (object, region) => {
                                     for (var o = 0; o < Math.floor(Math.random() * maxPhotos) + 1; o++) {
                                         var addPhoto = 'INSERT INTO photos (url, caption, popular_dish) values (?,?,?)';
                                         var randomObject = arrayOfObjects[Math.floor(Math.random() * arrayOfObjects.length)];
-                                        var photoUrl = formatUrlWithKey(randomObject, westRegion);
+                                        var photoUrl = formatUrlWithKey(randomObject, eastRegion);
                                         var photoParams = [photoUrl, faker.lorem.words(), dish_id];
                                         makePhoto(addPhoto, photoParams).catch(e => console.log('from the make photo',e))
                                     }
     
                                     for (var k = 0; k < params[3]; k++) {
-                                        var imageUrl = formatUrlWithKey(arrayOfProfiles[Math.floor(Math.random() * arrayOfObjects.length)], westRegion);
+                                        var imageUrl = formatUrlWithKey(arrayOfProfiles[Math.floor(Math.random() * arrayOfObjects.length)], eastRegion);
                                         makeUser(imageUrl)
                                             .then(response => {
                                                 var userid = response.insertId;
@@ -174,11 +174,11 @@ const formatUrlWithKey = (object, region) => {
 //         try {
 //             aws.config.setPromisesDependency();
 //             var photoBucket = 'photosthree';
-//             var westRegion = 'us-west-1';
+//             var eastRegion = 'us-west-1';
 //             aws.config.update({
 //                 accessKeyId: config.aws.accessKey,
 //                 secretAccessKey: config.aws.secretKey,
-//                 region: westRegion
+//                 region: eastRegion
 //             });
 
 //             const s3 = new aws.S3();
@@ -195,7 +195,7 @@ const formatUrlWithKey = (object, region) => {
 //                     for (var i = 0; i < dishes.length; i++) {
 //                         // making users after dish is made
 //                         for (var k = 0; k < dishes[i].review_count; k++) {
-//                             var imageUrl = formatUrlWithKey(arrayOfObjects[Math.floor(Math.random() * arrayOfObjects.length)], westRegion);
+//                             var imageUrl = formatUrlWithKey(arrayOfObjects[Math.floor(Math.random() * arrayOfObjects.length)], eastRegion);
 //                             var idOfDish = dishes[i].dish_id
 //                                     makeUser(imageUrl)
 //                                         .then((response => {

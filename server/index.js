@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const companyNumber = 10; // this is how many companies there are;
 const controller = require('./controller.js');
 const port = 3000;
+const cors = require('cors');
+
+app.use(cors());
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,17 +30,26 @@ app.get('/popularDishes/getPhotos', (req, res) => {
     controller.getPhotos(req, res);
 })
 
-app.get('/popularDishes/arrow.png', (req, res) => {
-    res.sendFile();
-});
+// app.get('/popularDishes/arrow.png', (req, res) => {
+//     res.sendFile();
+// });
 
-app.get('/popularDishes/leftarrow.png', (req, res) => {
-    res.sendFile('https://photosthree.s3-us-west-1.amazonaws.com/leftarrow.png');
-});
+// app.get('/popularDishes/leftarrow.png', (req, res) => {
+//     res.sendFile('https://photosthree.s3-us-west-1.amazonaws.com/leftarrow.png');
+// });
 
 app.get('/popularDishes/getReviews', (req, res) => {
     controller.getReviews(req, res);
 })
+
+app.post('/populardishes/', (req, res) => {
+    controller.postPopularDish(req, res);
+})
+
+app.put('/', (req, res) => {
+    controller.updatePopularDish(req, res);
+})
+
 
 app.listen(port, () => {
     console.log('server is running on', + port)
