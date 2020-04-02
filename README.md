@@ -36,57 +36,60 @@ Step7: open in browser.
 
 # API
 
-## Get popular dish
+## Get restaurant
 
 ### Request Method and URL 
 
-    GET /popularDishes/getItems/
+    GET /restaurants/:id
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | integer | required: unique identifier for the restaurant
 
 ### Success Response
 
 Status Code | Description | Type | Content
 ------------- | ------------- | ------------- | -------------
-200 | OK | JSON object | dishes
-
-### Error Response
-
-Status Code | Description | Content
-------------- | ------------- | -------------
-404 | NOT FOUND | `{error: 'Dish does not exist'}`
-
-### Sample Call
-
-`axios.get('popularDishes/getItems'`
-
-## Create new popular dish
-
-### Request Method and URL 
-
-    POST /popularDishes/
-
-### URL Parameters 
-
-Request body `data` has 5 properties 
-
-Parameter | Type | Description
------------- | ------------- | -------------
-data | object | properties: dish_id, dish_name, price, description, reviews
+200 | OK | JSON object | properties: id, name
 
 ### Data Parameters 
 
 Parameter | Type | Description
 ------------ | ------------- | -------------
-dish_id | integer | required
-dish_name | string | required: name of the popular dish that matches the one on the menu
-[price] | [integer] |the current price of the popular dish
-[description] |  [string]  | describes the dish 
-[reviews] | [object] | gives the reviews that the dish has been mentioned in 
+id | integer | required
+name | string | required: restaurant name
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Restaurant does not exist'}`
+
+### Sample Call
+
+`axios.get('restaurants/1')`
+
+## Create new restaurant
+
+### Request Method and URL 
+
+    POST /restaurants
+
+### URL Parameters 
+
+Request body `data` has 2 properties 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+data | JSON object | required: id, name
 
 ### Success Response
 
 Status Code | Description | Type | Content
 ------------- | ------------- | ------------- | -------------
-200 | OK | object | `{error: 'Successfully posted new popular dish'}`
+200 | OK | object | `'Successfully posted new restaurant'`
 
 ### Error Response
 
@@ -96,63 +99,210 @@ Status Code | Description | Content
 
 ### Sample Call
 
- `axios.post('/popularDishes/)`
+ `axios.post('/restaurants)`
 
 
-## Update popular dish
+## Update restaurant
 
 ### Request Method and URL 
 
-    PATCH /popularDishes/:id/update
+    PATCH /restaurants/:id
 
 ### URL Parameters 
 
 Parameter | Type | Description
 ------------ | ------------- | -------------
-id | number | id of the dish
+id | number | id of restaurant that is being updated
 
 ### Data Parameters 
 
 Parameter | Type | Description
 ------------ | ------------- | -------------
-body | object | only name, price, description, and reviews can be modified
+body | object | only name can be modified
 
 ### Success Response
 
 Status Code | Description | Type | Content
 ------------- | ------------- | ------------- | -------------
-200 | OK | object | `{error: 'Successfully dish'}`
+200 | OK | object | `'Successfully updated restaurant'`
 
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-404 | NOT FOUND | `{error: 'Dish does not exist'}`
+401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
+404 | NOT FOUND | `{error: 'Restaurant does not exist'}`
+
 
 ### Sample Call
 
+`axios.update('/restaurants/1')`
 
-## Delete popular dish
+## Delete restaurant 
 
 ### Request Method and URL 
 
-    DELETE /popularDishes/:id/delete
+    DELETE /restaurants/:id
 
 ### URL Parameters 
 
 Parameter | Type | Description
 ------------ | ------------- | -------------
-id | number | id of the dish
+id | number | id of restaurant being deleted
 
 ### Success Response
 
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `'Successfully deleted restaurant'`
 
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-404 | NOT FOUND | `{error: 'Dish not found'}`
+401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
+404 | NOT FOUND | `{error: 'Restaurant not found'}`
 
 ### Sample Call
 
-`axios.delete('/popularDishes/1')`
+`axios.delete('/restaurants/1')`
+
+## Get popular menu items
+
+### Request Method and URL 
+
+    GET /restaurants/:id/popularitems
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | JSON object | items array will consist of dish object that has id, name, price, description, reviews, photos
+
+### Data Parameters 
+
+Each dish 
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | integer | required
+name | string | required: menu item name
+price | integer | current price of the item
+description | string | describes the menu item
+reviews | array | list of all reviews where the menu item is mentioned in 
+photos | array | all the photos that depict the menu item
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Restaurant does not exist'}`
+
+### Sample Call
+
+`axios.get('restaurants/1/popularItems')`
+
+## Create new popular item
+
+### Request Method and URL 
+
+    POST /restaurants/:id/popularItems
+
+### URL Parameters 
+
+Request body `data` has 5 properties 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+data | JSON object | properties: id, name, price, description, reviews, photos
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | integer | required
+name | string | required: name of the popular item that matches the one on the menu
+[price] | [integer] |the current price of the popular item
+[description] |  [string]  | describes the item
+[reviews] | [array] | gives the reviews that the item has been mentioned in 
+[photos] | [array] | lists the photos of the menu item
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `'Successfully posted new popular item'`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
+404 | NOT FOUND | `{error: 'Restaurant does not exist'}`
+
+### Sample Call
+
+ `axios.post('/restaurants/1/popularItems)`
+
+
+## Update popular item
+
+### Request Method and URL 
+
+    PATCH /restaurants/:id/popularItems/:id/
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the item being updated
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+body | object | only name, price, description can be modified
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `'Successfully updated item'`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Item does not exist'}`
+
+### Sample Call
+
+`axios.update(/restaurants/1/popularItems/1)`
+
+## Delete popular dish
+
+### Request Method and URL 
+
+    DELETE /restaurants/:id/popularItems/:id
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the item being deleted
+
+### Success Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+200 | OK | `Item successfully deleted`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Item does not exist'}`
+
+### Sample Call
+
+`axios.delete('/restaurants/1/popularItems/1')`
+
