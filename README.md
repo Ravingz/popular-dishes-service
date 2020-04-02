@@ -45,22 +45,24 @@ Step7: open in browser.
 ### Success Response
 
 Status Code | Description | Type | Content
-------------- | ------------- | -------------
+------------- | ------------- | ------------- | -------------
 200 | OK | JSON object | dishes
 
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-400 | BAD REQUEST | `{error: 'Cannot access'}`
+404 | NOT FOUND | `{error: 'Dish does not exist'}`
 
 ### Sample Call
+
+`axios.get('popularDishes/getItems'`
 
 ## Create new popular dish
 
 ### Request Method and URL 
 
-    POST /popularDishes/getItems/
+    POST /popularDishes/
 
 ### URL Parameters 
 
@@ -69,6 +71,7 @@ Request body `data` has 5 properties
 Parameter | Type | Description
 ------------ | ------------- | -------------
 data | object | properties: dish_id, dish_name, price, description, reviews
+
 ### Data Parameters 
 
 Parameter | Type | Description
@@ -81,21 +84,26 @@ dish_name | string | required: name of the popular dish that matches the one on 
 
 ### Success Response
 
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `{error: 'Successfully posted new popular dish'}`
+
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-400 | BAD REQUEST | `{error: 'Cannot post'}`
+401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
 
 ### Sample Call
 
+ `axios.post('/popularDishes/)`
 
 
 ## Update popular dish
 
 ### Request Method and URL 
 
-    PATCH /popularDishes/getItems/:id/update
+    PATCH /popularDishes/:id/update
 
 ### URL Parameters 
 
@@ -111,11 +119,15 @@ body | object | only name, price, description, and reviews can be modified
 
 ### Success Response
 
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `{error: 'Successfully dish'}`
+
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-401 | BAD REQUEST | `{error: 'Cannot update'}`
+404 | NOT FOUND | `{error: 'Dish does not exist'}`
 
 ### Sample Call
 
@@ -124,7 +136,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    DELETE /popularDishes/getItems/:id/delete
+    DELETE /popularDishes/:id/delete
 
 ### URL Parameters 
 
@@ -139,6 +151,8 @@ id | number | id of the dish
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
-402 | BAD REQUEST | `{error: 'Cannot delete'}`
+404 | NOT FOUND | `{error: 'Dish not found'}`
 
 ### Sample Call
+
+`axios.delete('/popularDishes/1')`
