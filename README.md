@@ -33,3 +33,112 @@ start server: type in terminal  --------> npm start
 start transpiler: type in terminal -----> npm run build:react;
 
 Step7: open in browser.
+
+# API
+
+## Get popular dish
+
+### Request Method and URL 
+
+    GET /popularDishes/getItems/
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | -------------
+200 | OK | JSON object | dishes
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+400 | BAD REQUEST | `{error: 'Cannot access'}`
+
+### Sample Call
+
+## Create new popular dish
+
+### Request Method and URL 
+
+    POST /popularDishes/getItems/
+
+### URL Parameters 
+
+Request body `data` has 5 properties 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+data | object | properties: dish_id, dish_name, price, description, reviews
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+dish_id | integer | required
+dish_name | string | required: name of the popular dish that matches the one on the menu
+[price] | [integer] |the current price of the popular dish
+[description] |  [string]  | describes the dish 
+[reviews] | [object] | gives the reviews that the dish has been mentioned in 
+
+### Success Response
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+400 | BAD REQUEST | `{error: 'Cannot post'}`
+
+### Sample Call
+
+
+
+## Update popular dish
+
+### Request Method and URL 
+
+    PATCH /popularDishes/getItems/:id/update
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the dish
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+body | object | only name, price, description, and reviews can be modified
+
+### Success Response
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+401 | BAD REQUEST | `{error: 'Cannot update'}`
+
+### Sample Call
+
+
+## Delete popular dish
+
+### Request Method and URL 
+
+    DELETE /popularDishes/getItems/:id/delete
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the dish
+
+### Success Response
+
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+402 | BAD REQUEST | `{error: 'Cannot delete'}`
+
+### Sample Call
