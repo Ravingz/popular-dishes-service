@@ -5,7 +5,7 @@ const faker = require('faker');
 const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 
 const restaurantWriter = createCsvWriter({
-    path: './restaurants1.csv',
+    path: './restaurants.csv',
     header: [
         {id: 'name', title: 'RESTAURANT'},
     ]
