@@ -8,7 +8,8 @@ const itemsWriter = createCsvWriter({
     path: './items.csv',
     header: [
         {id: 'name', title: 'ITEM NAME'},
-        {id: 'restaurantId', title: 'RESTAURANT ID'}
+        {id: 'restaurant_id', title: 'RESTAURANT ID'},
+        {id: 'price', title: 'PRICE'}
     ]
 });
 
@@ -20,7 +21,8 @@ const generateItems = () => {
     for (var i = 0; i < itemsCount; i++ ) {
         const item = {};
         item.name = faker.commerce.productName();
-        item.restaurantId = randomInt(1, 10000000);
+        item.restaurant_id = randomInt(1, 10000000);
+        item.price = faker.finance.amount(10, 100, 2);
         items.push(item);
     }
     return items;
@@ -30,7 +32,7 @@ const generateItems = () => {
 let chunks = 0;
 
 const addItems = () => {
-    if (chunks < 100000) {
+    if (chunks < 20000) {
         chunks += 1;
         const items = generateItems();
         itemsWriter.writeRecords(items)       // returns a promise
@@ -44,5 +46,5 @@ const addItems = () => {
     }
 }
 console.time();
-bar.start(100000, 0);
+bar.start(20000, 0);
 addItems();

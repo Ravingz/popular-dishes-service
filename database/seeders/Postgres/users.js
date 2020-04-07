@@ -21,11 +21,10 @@ const generateUsers = () => {
     const users = [];
     for (var i = 0; i < userCount; i++ ) {
         const user = {};
-        const date = faker.date.past().toString()
         user.firstname = faker.name.firstName();
         user.lastname = faker.name.lastName();
         user.follower_count = randomInt(1, 500);
-        user.created = date.slice(0, 33);
+        user.created = faker.date.past().toJSON();
         users.push(user);
     }
     return users;
