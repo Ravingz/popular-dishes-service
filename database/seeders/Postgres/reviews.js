@@ -7,12 +7,12 @@ const bar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
 const reviewsWriter = createCsvWriter({
     path: './reviews.csv',
     header: [
+        {id: 'comment', title: 'COMMENT'},
+        {id: 'rating', title: 'RATING'},
         {id: 'item_id', title: 'ITEM ID'},
         {id: 'user_id', title: 'USER ID'},
         {id: 'created', title: 'CREATED DATE'},
         {id: 'updated', title: 'LAST UPDATED'},
-        {id: 'rating', title: 'RATING'},
-        {id: 'comment', title: 'COMMENT'},
     ]
 });
 
@@ -23,12 +23,12 @@ const generateReviews = () => {
     const reviews = [];
     for (var i = 0; i < reviewsCount; i++ ) {
         const review = {};
+        review.comment = faker.lorem.sentences();
+        review.rating = randomInt(1, 5);
         review.item_id = randomInt(1, 20000000);
         review.user_id = randomInt(1, 1000000);
         review.created = faker.date.past().toJSON();
         review.updated = faker.date.past().toJSON();
-        review.rating = randomInt(1, 5);
-        review.comment = faker.lorem.sentences();
         reviews.push(review);
     }
     return reviews;
@@ -37,7 +37,7 @@ const generateReviews = () => {
 let chunks = 0;
 
 const addReviews = () => {
-    if (chunks < 40000) {
+    if (chunks < 190) {
         chunks += 1;
         const reviews = generateReviews();
         reviewsWriter.writeRecords(reviews)       // returns a promise
@@ -52,5 +52,5 @@ const addReviews = () => {
 }
 
 console.time();
-bar.start(40000, 0);
+bar.start(190, 0);
 addReviews();

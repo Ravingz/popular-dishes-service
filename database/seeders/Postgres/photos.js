@@ -9,8 +9,8 @@ const photosWriter = createCsvWriter({
     header: [
         {id: 'url', title: 'URL'},
         {id: 'caption', title: 'CAPTION'},
-        {id: 'userId', title: 'USER ID'},
-        {id: 'itemId', title: 'ITEM ID'},
+        {id: 'user_id', title: 'USER ID'},
+        {id: 'item_id', title: 'ITEM ID'},
         {id: 'uploaded', title: "UPLOADED DATE"}
     ]
 });
@@ -24,8 +24,9 @@ const generatePhotos = () => {
         const photo = {};
         photo.url = `https://ravingzbucket.s3.us-east-2.amazonaws.com/popularDishes/photo${randomInt(1, 999)}.jpg`
         photo.caption = faker.lorem.sentence();
-        photo.itemId = randomInt(1, 100000000);
-        photo.uploaded = faker.date.past().toString().slice(0, 33);
+        photo.user_id = randomInt(1, 1000000);
+        photo.item_id = randomInt(1, 20000000);
+        photo.uploaded = faker.date.past().toJSON();
         photos.push(photo);
     }
     return photos;
@@ -35,7 +36,7 @@ const generatePhotos = () => {
 let chunks = 0;
 
 const addPhotos = () => {
-    if (chunks < 500) {
+    if (chunks < 1000) {
         chunks += 1;
         const photos = generatePhotos();
         photosWriter.writeRecords(photos)       // returns a promise
@@ -49,5 +50,5 @@ const addPhotos = () => {
     }
 }
 console.time();
-bar.start(500, 0);
+bar.start(1000, 0);
 addPhotos();
