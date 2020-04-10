@@ -37,7 +37,7 @@ const generateReviews = () => {
 let chunks = 0;
 
 const addReviews = () => {
-    if (chunks < 190) {
+    if (chunks < 10000) {
         chunks += 1;
         const reviews = generateReviews();
         reviewsWriter.writeRecords(reviews)       // returns a promise
@@ -52,5 +52,5 @@ const addReviews = () => {
 }
 
 console.time();
-bar.start(190, 0);
+bar.start(10000, 0);
 addReviews();

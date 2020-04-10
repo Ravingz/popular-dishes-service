@@ -36,7 +36,7 @@ const generatePhotos = () => {
 let chunks = 0;
 
 const addPhotos = () => {
-    if (chunks < 1000) {
+    if (chunks < 9000) {
         chunks += 1;
         const photos = generatePhotos();
         photosWriter.writeRecords(photos)       // returns a promise
@@ -50,5 +50,5 @@ const addPhotos = () => {
     }
 }
 console.time();
-bar.start(1000, 0);
+bar.start(9000, 0);
 addPhotos();

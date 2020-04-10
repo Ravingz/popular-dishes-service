@@ -12,7 +12,7 @@
     "test": "jest",
     "start": "nodemon ./server/index.js",
     "build:react": "webpack -d --watch",
-    "seed": "node ./database/dataGenerator.js"
+    "seed": "node ./database/seeders/Postgres/seed.js"
   },
   "repository": {
     "type": "git",
@@ -34,13 +34,17 @@
     "babel-preset-react": "^6.24.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "cassandra-driver": "^4.5.0",
+    "cli-progress": "^3.6.1",
     "cors": "^2.8.5",
+    "csv-writer": "^1.6.0",
     "dateformat": "^3.0.3",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
+    "pg": "^8.0.0",
     "puppeteer": "^2.1.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

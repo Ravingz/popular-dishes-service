@@ -1,55 +1,40 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const axios = require('axios');
 const bodyParser = require('body-parser');
-const companyNumber = 10; // this is how many companies there are;
 const controller = require('./controller.js');
 const port = 3000;
 const cors = require('cors');
 
 app.use(cors());
 
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, '../client/dist/')))
 
-
-app.get('/popularDishes/getCompany', (req, res) => {
-    // var companyId = Math.floor(Math.random() * companyNumber) + 1;
-    controller.getCompany(companyNumber, res);
+// GET restaurant by ID
+app.get('/restaurants/:rest_id/', (req, res) => {
+    controller.getRestaurantById(req, res);
 })
 
-app.get('/popularDishes/getItems', (req, res) => {
-    controller.getDishes(req, res);
-});
+//GET/POST/UPDATE/DELETE popular items for one restaurant
 
-app.get('/popularDishes/getPhotos', (req, res) => {
-    console.log(req.query);
-    controller.getPhotos(req, res);
+app.get('/restaurants/:rest_id/items', (req, res) => {
+    const { rest_id } = req.body;
+    controller.getItems(req, res);
 })
 
-// app.get('/popularDishes/arrow.png', (req, res) => {
-//     res.sendFile();
-// });
-
-// app.get('/popularDishes/leftarrow.png', (req, res) => {
-//     res.sendFile('https://photosthree.s3-us-west-1.amazonaws.com/leftarrow.png');
-// });
-
-app.get('/popularDishes/getReviews', (req, res) => {
-    controller.getReviews(req, res);
+app.post('/restaurants/:rest_id/items', (req, res) => {
+    controller.postItem(req, res);
+})
+app.patch('/restaurants/:rest_id/items', (req, res) => {
+    controller.updateItem(req, res);
 })
 
-app.post('/populardishes/', (req, res) => {
-    controller.postPopularDish(req, res);
+app.delete('/restaurants/:rest_id/items/:item_id', (req, res) => {
+    controller.deleteItem(req, res);
 })
-
-app.put('/', (req, res) => {
-    controller.updatePopularDish(req, res);
-})
-
 
 app.listen(port, () => {
     console.log('server is running on', + port)

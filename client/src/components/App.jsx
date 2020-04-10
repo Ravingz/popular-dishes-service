@@ -54,8 +54,10 @@ class App extends React.Component {
     }
 
     getItems(number) {
+        console.log('get items is called', number)
         axios.get('popularDishes/getItems', { params: { restaurant_id: number } })
             .then((response) => {
+                // console.log('getitems response', response)
                 var items = response.data;
                 var arr = []
                 for (var i = 0; i < items.length; i++) {
@@ -72,16 +74,19 @@ class App extends React.Component {
     componentDidMount() {
         axios.get('popularDishes/getCompany')
             .then((response) => {
-                this.setState({restaurant: response.data[0]});
-                this.getItems(response.data[0].restaurant_id); // with the restaurant_id get the popular items
+                console.log('popularDishes on mount', response.data.rows[0].id)
+                // console.log('what are you trying to ', response.data[0].id)
+                this.setState({restaurant: response.data.rows[0].id});
+                this.getItems(response.data.rows[0].id); // with the restaurant_id get the popular items
             })
             .then(() => {
+                    console.log('popularDishes mounts', response)
                     this.setState({ doneLoading: true });
             })
     }
 
     outsideModalHandler(e) {
-        console.log('clicked from the app', e.target)
+        // console.log('clicked from the app', e.target)
         if (e.target.className.includes('modal')) {
             this.setState({visibleMenu: false});
         }

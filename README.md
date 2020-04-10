@@ -306,3 +306,139 @@ Status Code | Description | Content
 
 `axios.delete('/restaurants/1/popularItems/1')`
 
+## Get Photos for popular item
+
+### Request Method and URL 
+
+    GET /restaurants/:id/popularitems/:id/photos
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | JSON object | items array will consist of photo object that has id, url, caption, created date, user
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | integer | required
+url | string | required: url to the S3 bucket that hosts the image
+caption | string | caption inputted by the user that posted the image
+createdDate | date | the date the image was uploaded
+user | object | user that uplaoded the photo
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Image does not exist'}`
+
+### Sample Call
+
+`axios.get('restaurants/1/popularItems/1/photos')`
+
+## Upload new photo
+
+### Request Method and URL 
+
+    POST /restaurants/:id/popularItems
+
+### URL Parameters 
+
+Request body `data` has 5 properties 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+data | JSON object | properties: id, name, price, description, reviews, photos
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | integer | required
+name | string | required: name of the popular item that matches the one on the menu
+[price] | [integer] |the current price of the popular item
+[description] |  [string]  | describes the item
+[reviews] | [array] | gives the reviews that the item has been mentioned in 
+[photos] | [array] | lists the photos of the menu item
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `'Successfully posted new popular item'`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
+404 | NOT FOUND | `{error: 'Restaurant does not exist'}`
+
+### Sample Call
+
+ `axios.post('/restaurants/1/popularItems)`
+
+
+## Update popular item
+
+### Request Method and URL 
+
+    PATCH /restaurants/:id/popularItems/:id/
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the item being updated
+
+### Data Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+body | object | only name, price, description can be modified
+
+### Success Response
+
+Status Code | Description | Type | Content
+------------- | ------------- | ------------- | -------------
+200 | OK | object | `'Successfully updated item'`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Item does not exist'}`
+
+### Sample Call
+
+`axios.update(/restaurants/1/popularItems/1)`
+
+## Delete popular dish
+
+### Request Method and URL 
+
+    DELETE /restaurants/:id/popularItems/:id
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+id | number | id of the item being deleted
+
+### Success Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+200 | OK | `Item successfully deleted`
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+404 | NOT FOUND | `{error: 'Item does not exist'}`
+
+### Sample Call
+
+`axios.delete('/restaurants/1/popularItems/1')`
