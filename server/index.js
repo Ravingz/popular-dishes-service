@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
-const controller = require('./controller.js');
+const Controller = require('./controller.js');
 const port = 3000;
 const cors = require('cors');
 
@@ -14,27 +14,18 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '../client/dist/')))
 
 // GET restaurant by ID
-app.get('/restaurants/:rest_id/', (req, res) => {
-    controller.getRestaurantById(req, res);
-})
+app.get('/restaurants/:rest_id/', Controller.getRestaurant);
 
 //GET/POST/UPDATE/DELETE popular items for one restaurant
 
-app.get('/restaurants/:rest_id/items', (req, res) => {
-    const { rest_id } = req.body;
-    controller.getItems(req, res);
-})
+app.get('/restaurants/:rest_id/items', Controller.getItems);
 
-app.post('/restaurants/:rest_id/items', (req, res) => {
-    controller.postItem(req, res);
-})
-app.patch('/restaurants/:rest_id/items', (req, res) => {
-    controller.updateItem(req, res);
-})
+app.post('/restaurants/:rest_id/items', Controller.postItem);
 
-app.delete('/restaurants/:rest_id/items/:item_id', (req, res) => {
-    controller.deleteItem(req, res);
-})
+app.patch('/restaurants/:rest_id/items', Controller.updateItem);
+
+app.delete('/restaurants/:rest_id/items/:item_id', Controller.deleteItem);
+
 
 app.listen(port, () => {
     console.log('server is running on', + port)
