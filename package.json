@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon ./server/index.js",
+    "start": "nodemon ./server/app.js",
     "build:react": "webpack -d --watch",
     "seed": "node ./database/seeders/Postgres/seed.js"
   },
