@@ -5,3 +5,5 @@ config.json
 *.csv
 
 package_lock.json
+
+config.js

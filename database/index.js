@@ -19,11 +19,13 @@
 // module.exports = connection;
 
 const pg = require('pg');
+const config = require('../config.js');
 
 const connection = new pg.Pool({
-  host: 'localhost',
-  user: 'postgres',
-  database: 'popularitems',
+  host: `${hostname}`,
+  user: `${user}`,
+  password: `${password}`,
+  database: `${databaseName}`,
   port: 5432,
 });
 

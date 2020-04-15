@@ -40,9 +40,11 @@
     "csv-writer": "^1.6.0",
     "dateformat": "^3.0.3",
     "express": "^4.17.1",
+    "express-winston": "^4.0.3",
     "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "mysql": "^2.18.1",
+    "newrelic": "^6.5.0",
     "nodemon": "^2.0.2",
     "pg": "^8.0.0",
     "puppeteer": "^2.1.1",
@@ -50,7 +52,8 @@
     "react-dom": "^16.13.0",
     "styled-components": "^5.0.1",
     "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

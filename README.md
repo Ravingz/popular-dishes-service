@@ -40,13 +40,13 @@ Step7: open in browser.
 
 ### Request Method and URL 
 
-    GET /restaurants/:id
+    GET /restaurants/:rest_id
 
 ### URL Parameters 
 
 Parameter | Type | Description
 ------------ | ------------- | -------------
-id | integer | required: unique identifier for the restaurant
+rest_id | integer | required: unique identifier for the restaurant
 
 ### Success Response
 
@@ -89,13 +89,14 @@ data | JSON object | required: id, name
 
 Status Code | Description | Type | Content
 ------------- | ------------- | ------------- | -------------
-200 | OK | object | `'Successfully posted new restaurant'`
+201 | CREATED | object (the location header points to the URI of the new resource) | `'Successfully posted new restaurant'`
 
 ### Error Response
 
 Status Code | Description | Content
 ------------- | ------------- | -------------
 401 | UNAUTHORIZED | `{error: 'You are unauthorized to make this request'}`
+500 | INTERNAL SERVER ERROR | `{error: 'Something went wrong'}`
 
 ### Sample Call
 
@@ -106,7 +107,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    PATCH /restaurants/:id
+    PATCH /restaurants/:rest_id
 
 ### URL Parameters 
 
@@ -142,7 +143,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    DELETE /restaurants/:id
+    DELETE /restaurants/:rest_id
 
 ### URL Parameters 
 
@@ -154,7 +155,7 @@ id | number | id of restaurant being deleted
 
 Status Code | Description | Type | Content
 ------------- | ------------- | ------------- | -------------
-200 | OK | object | `'Successfully deleted restaurant'`
+204 | NO CONTENT | {} | `'Successfully deleted restaurant'`
 
 ### Error Response
 
@@ -171,7 +172,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    GET /restaurants/:id/popularitems
+    GET /restaurants/:rest_id/items
 
 ### Success Response
 
@@ -205,7 +206,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    POST /restaurants/:id/popularItems
+    POST /restaurants/:rest_id/items
 
 ### URL Parameters 
 
@@ -248,7 +249,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    PATCH /restaurants/:id/popularItems/:id/
+    PATCH /restaurants/:rest_id/items/:item_id/
 
 ### URL Parameters 
 
@@ -282,7 +283,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    DELETE /restaurants/:id/popularItems/:id
+    DELETE /restaurants/:rest_id/popularitems/:item_id
 
 ### URL Parameters 
 
@@ -310,7 +311,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    GET /restaurants/:id/popularitems/:id/photos
+    GET /restaurants/:rest_id/popularitems/:item_id/photos
 
 ### Success Response
 
@@ -342,7 +343,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    POST /restaurants/:id/popularItems
+    POST /restaurants/:rest_id/items
 
 ### URL Parameters 
 
@@ -385,7 +386,7 @@ Status Code | Description | Content
 
 ### Request Method and URL 
 
-    PATCH /restaurants/:id/popularItems/:id/
+    PATCH /restaurants/:rest_id/items/:item_id/
 
 ### URL Parameters 
 
@@ -413,13 +414,13 @@ Status Code | Description | Content
 
 ### Sample Call
 
-`axios.update(/restaurants/1/popularItems/1)`
+`axios.update(/restaurants/1/items/1)`
 
 ## Delete popular dish
 
 ### Request Method and URL 
 
-    DELETE /restaurants/:id/popularItems/:id
+    DELETE /restaurants/:rest_id/items/:item_id
 
 ### URL Parameters 
 
@@ -441,4 +442,40 @@ Status Code | Description | Content
 
 ### Sample Call
 
-`axios.delete('/restaurants/1/popularItems/1')`
+`axios.delete('/restaurants/1/items/1')`
+
+## Get all the Photos for the popular dish
+
+### Request Method and URL 
+
+    GET /restaurants/:rest_id/items/:item_id/photos?embed=photos.url
+
+### URL Parameters 
+
+Parameter | Type | Description
+------------ | ------------- | -------------
+item_id | number | id of the item 
+rest_id | number | id of the restaurant
+
+### Success Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+
+### Error Response
+
+Status Code | Description | Content
+------------- | ------------- | -------------
+
+### Sample Call
+
+`axios.get('/photos/?fields=1, 1')`
+
+
+# Rate Limiting
+
+Header | Value 
+---------- | ----------
+X-RateLimit-Limit | max number of requests permitted to make per hour
+X-RateLimit-Remaining | the number of requests remaining in the current rate limit window
+X-RateLimit-Reset | remaining secongs before the rate limit resets 
