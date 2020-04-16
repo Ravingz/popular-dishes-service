@@ -15,6 +15,11 @@ app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, '../client/dist/')))
 
+//Loader.io
+app.get('/loaderio-763c154849fd67a4d84e63c93297d95d/', (req, res) => {
+    res.sendFile(`${__dirname}/loaderio-763c154849fd67a4d84e63c93297d95d.txt`);
+  });
+
 // GET restaurant by ID
 app.get('/restaurants/:rest_id/', Controller.getRestaurant);
 

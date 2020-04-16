@@ -22,10 +22,10 @@ const pg = require('pg');
 const config = require('../config.js');
 
 const connection = new pg.Pool({
-  host: `${hostname}`,
-  user: `${user}`,
-  password: `${password}`,
-  database: `${databaseName}`,
+  host: `${config.hostname}`,
+  user: `${config.user}`,
+  password: `${config.password}`,
+  database: `${config.databaseName}`,
   port: 5432,
 });
 
